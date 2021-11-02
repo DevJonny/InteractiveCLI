@@ -1,4 +1,4 @@
-# Interactive CLI Template
+# Interactive CLI
 
 The shell for an interactive CLI tool using .NET using the [Spectre.Console](https://github.com/spectreconsole/spectre.console) library as the base.
 
