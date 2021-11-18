@@ -11,7 +11,12 @@ public class Runner
 
     public async Task Run<T>() where T : ActionBase
     {
-        var service = (T) _serviceProvider.GetService(typeof(T));
+        var service = _serviceProvider.GetService(typeof(T)) as T;
+
+        if (service is null)
+        {
+            throw new InvalidOperationException();
+        }
 
         await service.Run();
     }

@@ -15,11 +15,14 @@ internal class Program
                 try
                 {
                     ConfigureLogging(o);
-                    ConfigureIoc();
+                    ConfigureIoc(o);
+
+                    var command = new InteractiveCommand(_serviceProvider.GetService<Runner>());
+                    command.Run();
                 }
                 catch (Exception e)
                 {
-
+                    Log.Error(e, "Something went wrong");
                 }
                 finally
                 {
@@ -44,9 +47,12 @@ internal class Program
                 .CreateLogger();
         }
 
-        void ConfigureIoc()
+        void ConfigureIoc<T>(T options) where T : IOptions
         {
             var services = new ServiceCollection();
+
+            services.AddSingleton(typeof(T), options);
+            services.AddSingleton(provider => new Runner(provider));
 
             foreach (var action in typeof(ActionBase).Assembly.GetTypes().Where(t => t.BaseType == typeof(ActionBase)))
                 services.AddSingleton(action);

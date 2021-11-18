@@ -1,5 +1,6 @@
 global using CommandLine;
 global using InteractiveCLI.Actions;
+global using InteractiveCLI.Commands;
 global using InteractiveCLI.Options;
 global using Serilog; 
 global using System;
