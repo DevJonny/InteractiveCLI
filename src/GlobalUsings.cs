@@ -1,0 +1,9 @@
+global using CommandLine;
+global using InteractiveCLI.Actions;
+global using InteractiveCLI.Options;
+global using Serilog; 
+global using System;
+global using Spectre.Console;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;

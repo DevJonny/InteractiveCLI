@@ -1,13 +1,9 @@
-using InteractiveCLI.Settings;
-using Spectre.Console.Cli;
+namespace InteractiveCLI.Commands;
 
-namespace InteractiveCLI.Commands
+public class InteractiveCommand : IRunnable
 {
-    public class InteractiveCommand : Command<InteractiveCommandSettings>
+    public Task Run()
     {
-        public override int Execute(CommandContext context, InteractiveCommandSettings settings)
-        {
-            throw new System.NotImplementedException();
-        }
+        throw new System.NotImplementedException();
     }
 }

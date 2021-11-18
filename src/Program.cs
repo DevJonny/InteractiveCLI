@@ -1,40 +1,31 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog.Events;
 
-namespace InteractiveCLI
-{
-    internal class Program
-    {
-        private static IServiceProvider _serviceProvider;
-        
-        public static void Main(string[] args)
-        {
-            try
-            {
-                var app = new CommandApp<InteractiveCommand>();
-                app.Configure(config =>
-                {
-                    config
-                        .AddCommand<InteractiveCommand>("interactive")
-                        .WithDescription("Launches the app");
-#if DEBUG
-                    config.PropagateExceptions();
-                    config.ValidateExamples();
-                    
-                    var services = new ServiceCollection();
-            
-                    foreach (var action in typeof(ActionBase).Assembly.GetTypes().Where(t => t.BaseType == typeof(ActionBase)))
-                        services.AddSingleton(action);
+namespace InteractiveCLI;
 
-                    _serviceProvider = services.BuildServiceProvider(new ServiceProviderOptions
-                    {
-                        ValidateScopes = true
-                    });
-#endif
-                });
-            }
-            catch (Exception e)
+internal class Program
+{
+    private static IServiceProvider _serviceProvider;
+
+    public static void Main(string[] args)
+    {
+        Parser.Default.ParseArguments<InteractiveOptions>(args)
+            .WithParsed(o =>
             {
+                try
+                {
+                    ConfigureLogging(o);
+                    ConfigureIoc();
+                }
+                catch (Exception e)
+                {
+
+                }
+                finally
+                {
+                    DisposeServices();
+                }
+            });
 
 
         void ConfigureLogging(IOptions options)
@@ -53,10 +44,20 @@ namespace InteractiveCLI
                 .CreateLogger();
         }
 
-            
+        void ConfigureIoc()
+        {
+            var services = new ServiceCollection();
+
+            foreach (var action in typeof(ActionBase).Assembly.GetTypes().Where(t => t.BaseType == typeof(ActionBase)))
+                services.AddSingleton(action);
+
+            _serviceProvider = services.BuildServiceProvider(new ServiceProviderOptions
+            {
+                ValidateScopes = true
+            });
         }
 
-        private static void DisposeServices()
+        void DisposeServices()
         {
             switch (_serviceProvider)
             {
