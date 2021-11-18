@@ -8,7 +8,8 @@ This project uses the following Open Source projects:
 
 - [Spectre.Console](https://github.com/spectreconsole/spectre.console)
 - [Command Line Parser](https://github.com/commandlineparser/commandline)
+- [Serilog](https://github.com/serilog/serilog)
 
 ## License
 
-Spectre.Console is provided as-is under the GNU GPL v3 license. For more information see [LICENSE](license).
+Interactive CLI is provided as-is under the GNU GPL v3 license. For more information see [LICENSE](license).

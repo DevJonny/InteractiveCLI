@@ -1,10 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using InteractiveCLI.Actions;
-using InteractiveCLI.Commands;
-using Microsoft.Extensions.DependencyInjection;
-using Spectre.Console.Cli;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog.Events;
 
 namespace InteractiveCLI
 {
@@ -41,32 +36,25 @@ namespace InteractiveCLI
             catch (Exception e)
             {
 
-            }
-            finally
+
+        void ConfigureLogging(IOptions options)
+        {
+            var logEventLevel = options.LogLevel switch
             {
-                DisposeServices();
-            }
+                LogLevel.Verbose => LogEventLevel.Debug,
+                LogLevel.Normal => LogEventLevel.Information,
+                LogLevel.Quiet => LogEventLevel.Error,
+                LogLevel.Silent => LogEventLevel.Fatal
+            };
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Is(logEventLevel)
+                .WriteTo.Console(logEventLevel)
+                .CreateLogger();
+        }
 
             
         }
-        
-        // void ConfigureLogging(IGeneralOptions options)
-        // {
-        //     var logEventLevel = options.DebugLogging
-        //         ? LogEventLevel.Debug
-        //         : options.ErrorLogging
-        //             ? LogEventLevel.Error
-        //             : LogEventLevel.Information;
-        //     
-        //     if (!options.SilentOnError)
-        //     {
-        //         Log.Logger = new LoggerConfiguration()
-        //             .MinimumLevel.Is(logEventLevel)
-        //             .WriteTo.Console(logEventLevel)
-        //             .WriteTo.File(Path.Join(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".huddle"), "log.txt"), LogEventLevel.Error, rollingInterval: RollingInterval.Day)
-        //             .CreateLogger();
-        //     }
-        // }
 
         private static void DisposeServices()
         {
