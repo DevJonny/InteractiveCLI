@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveCLI", "src\InteractiveCLI.csproj", "{E7C25C0A-6EED-44DA-971F-4041B57824AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveCLI", "src\InteractiveCLI\InteractiveCLI.csproj", "{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E7C25C0A-6EED-44DA-971F-4041B57824AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7C25C0A-6EED-44DA-971F-4041B57824AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7C25C0A-6EED-44DA-971F-4041B57824AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7C25C0A-6EED-44DA-971F-4041B57824AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
