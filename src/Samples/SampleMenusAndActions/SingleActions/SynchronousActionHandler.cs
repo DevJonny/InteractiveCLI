@@ -1,6 +1,7 @@
+using InteractiveCLI.Actions;
 using Paramore.Brighter;
 
-namespace InteractiveCLI.SingleActions;
+namespace SampleMenusAndActions.SingleActions;
 
 public class SynchronousActionHandler : SingleActionBase<SynchronousAction>
 {

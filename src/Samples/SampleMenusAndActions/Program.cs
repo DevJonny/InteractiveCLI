@@ -1,7 +1,7 @@
 ﻿using InteractiveCLI;
-using InteractiveCLI.Menus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using SampleMenusAndActions.Menus;
 using SampleMenusAndActions.Options;
 
 var configuration = new ConfigurationBuilder()
@@ -10,12 +10,7 @@ var configuration = new ConfigurationBuilder()
     
 var host = 
     Host.CreateDefaultBuilder()
-        .AddInteractiveCli<InteractiveOptions>(
-            configuration,
-            services =>
-            {
-                
-            })
+        .AddInteractiveCli(configuration)
         .Build();
 
 host.UseInteractiveCli<InteractiveOptions, TopLevelMenu>(_ => new TopLevelMenu(), args);

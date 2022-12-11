@@ -8,10 +8,15 @@ public abstract class MenuHandlerBase<T> : RequestHandlerAsync<T> where T : clas
     protected readonly MenuBuilder MenuBuilder;
 
     private readonly IAmACommandProcessor _commandProcessor;
+    private readonly bool _quitable;
+    private readonly bool _isTopLevel;
     
-    protected MenuHandlerBase(IAmACommandProcessor commandProcessor)
+    protected MenuHandlerBase(IAmACommandProcessor commandProcessor, bool quitable = false, bool isTopLevel = false)
     {
         _commandProcessor = commandProcessor;
+        _quitable = quitable;
+        _isTopLevel = isTopLevel;
+        
         MenuBuilder = new MenuBuilder();
     }
     
@@ -23,15 +28,21 @@ public abstract class MenuHandlerBase<T> : RequestHandlerAsync<T> where T : clas
             
             BuildMenu();
 
-            if (MenuBuilder.MenuItems.All(i => i.Name.ToLower() != "quit"))
+            if (!_isTopLevel)
                 MenuBuilder.AddMenuItem<Back>("Back", "Go back up a level");
+
+            if (_isTopLevel || _quitable)
+                MenuBuilder.AddMenuItem<Quit>("Quit", "Quit the application");
 
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .AddChoices(MenuBuilder.MenuItems.Select(i => i.Name)));
 
-            if (option is "Back" || option.ToLower() is "quit")
+            if (option is "Back")
                 return await base.HandleAsync(command, cancellationToken);
+            
+            if (option is "Quit")
+                throw new StopApplicationAction();
 
             if (option is "Help")
             {

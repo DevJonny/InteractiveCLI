@@ -6,12 +6,20 @@ using Paramore.Brighter;
 using Paramore.Brighter.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
+using Spectre.Console;
 
 namespace InteractiveCLI;
 
 public static class InteractiveCliBootstrapper
 {
-    public static IHostBuilder AddInteractiveCli<T>(
+    public static IHostBuilder AddInteractiveCli(this IHostBuilder hostBuilder, IConfiguration configuration)
+    {
+        hostBuilder.AddInteractiveCli(configuration, _ => { });
+
+        return hostBuilder;
+    }
+    
+    public static IHostBuilder AddInteractiveCli(
         this IHostBuilder hostBuilder,
         IConfiguration configuration,
         Action<IServiceCollection> configureServices)
@@ -46,6 +54,13 @@ public static class InteractiveCliBootstrapper
                     var commandProcessor = host.Services.GetService<IAmACommandProcessor>();
                     commandProcessor?.SendAsync(buildFirstMenu(options)).Wait();
                 });
+        }
+        catch (AggregateException e)
+        {
+            if (e.InnerException is StopApplicationAction)
+                AnsiConsole.WriteLine("Goodbye!");
+            else
+                throw e.InnerException!;
         }
         catch (Exception e)
         {
