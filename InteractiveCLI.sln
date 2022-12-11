@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveCLI", "src\InteractiveCLI\InteractiveCLI.csproj", "{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{9B9ABC70-56FA-4216-A67D-2B0AB8945556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMenusAndActions", "src\Samples\SampleMenusAndActions\SampleMenusAndActions.csproj", "{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD6BBAA7-3C30-4E93-AAA1-ADFE498D8093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{54F15CE9-4D5C-4408-A61D-BB9CAA4D7E33} = {9B9ABC70-56FA-4216-A67D-2B0AB8945556}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-namespace InteractiveCLI.Options;
+namespace SampleMenusAndActions.Options;
 
 public enum LogLevel
 {

@@ -41,7 +41,7 @@ public abstract class MenuHandlerBase<T> : RequestHandlerAsync<T> where T : clas
             
             // Create command and dispatch
             var commandType = MenuBuilder.MenuItems.First(i => i.Name == option).CommandType;
-            var nextCommand = (dynamic) Convert.ChangeType(Activator.CreateInstance(commandType), commandType);
+            var nextCommand = (dynamic) Convert.ChangeType(Activator.CreateInstance(commandType), commandType)!;
             await _commandProcessor.SendAsync(nextCommand, cancellationToken: cancellationToken);
         }
     }

@@ -1,7 +1,7 @@
 using CommandLine;
 using Paramore.Brighter;
 
-namespace InteractiveCLI.Options;
+namespace SampleMenusAndActions.Options;
 
 [Verb("interactive", true)]
 public class InteractiveOptions : Command, IOptions

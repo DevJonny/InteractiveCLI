@@ -1,3 +1,4 @@
+using InteractiveCLI.SingleActions;
 using Paramore.Brighter;
 
 namespace InteractiveCLI.Menus;
@@ -11,7 +12,8 @@ public class TopLevelMenuHandler : MenuHandlerBase<TopLevelMenu>
     protected override void BuildMenu()
     {
         MenuBuilder
-            .AddMenuItem<SubMenu>( "Sub Menu", "A secondary menu");
+            .AddMenuItem<SubMenu>( "Sub Menu", "A secondary menu")
+            .AddMenuItem<SynchronousAction>("Synchronous Action", "A synchronous one time action");
     }
 }
 
