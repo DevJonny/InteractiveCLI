@@ -7,7 +7,6 @@ public class SynchronousActionHandler : SingleActionBase<SynchronousAction>
 {
     protected override void Action()
     {
-        Console.WriteLine($"Running the {nameof(SynchronousActionHandler)}");
     }
 }
 
