@@ -9,6 +9,7 @@ This project uses the following Open Source projects:
 - [Spectre.Console](https://github.com/spectreconsole/spectre.console)
 - [Command Line Parser](https://github.com/commandlineparser/commandline)
 - [Serilog](https://github.com/serilog/serilog)
+- [Brighter](https://github.com/BrighterCommand/Brighter)
 
 ## License
 
