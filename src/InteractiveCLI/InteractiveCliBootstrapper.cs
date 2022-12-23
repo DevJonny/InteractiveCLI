@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using InteractiveCLI.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,17 +13,18 @@ namespace InteractiveCLI;
 
 public static class InteractiveCliBootstrapper
 {
-    public static IHostBuilder AddInteractiveCli(this IHostBuilder hostBuilder, IConfiguration configuration)
+    public static IHostBuilder AddInteractiveCli<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration) 
+        where TOptions : class, IOptions
     {
-        hostBuilder.AddInteractiveCli(configuration, _ => { });
+        hostBuilder.AddInteractiveCli<TOptions>(configuration, _ => { });
 
         return hostBuilder;
     }
     
-    public static IHostBuilder AddInteractiveCli(
+    public static IHostBuilder AddInteractiveCli<TOptions>(
         this IHostBuilder hostBuilder,
         IConfiguration configuration,
-        Action<IServiceCollection> configureServices)
+        Action<IServiceCollection> configureServices) where TOptions : class, IOptions
     {
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
@@ -34,6 +36,7 @@ public static class InteractiveCliBootstrapper
             {
                 configureServices(services);
                 services
+                    .AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get())
                     .AddBrighter().AutoFromAssemblies();
             })
             .UseSerilog();
@@ -44,13 +47,16 @@ public static class InteractiveCliBootstrapper
     public static IHost UseInteractiveCli<TOptions, TMenu>(
         this IHost host, 
         Func<TOptions, TMenu> buildFirstMenu, 
-        params string[] args) where TMenu : Command
+        params string[] args) 
+            where TMenu : Command 
+            where TOptions : class, IOptions
     {
         try
         {
             Parser.Default.ParseArguments<TOptions>(args)
                 .WithParsed(options =>
                 {
+                    OptionsFactory<TOptions>.Set(options);
                     var commandProcessor = host.Services.GetService<IAmACommandProcessor>();
                     commandProcessor?.SendAsync(buildFirstMenu(options)).Wait();
                 });
