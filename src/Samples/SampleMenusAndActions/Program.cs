@@ -15,7 +15,7 @@ Log.Logger = new LoggerConfiguration()
 
 var host = 
     Host.CreateDefaultBuilder()
-        .AddInteractiveCli(configuration)
+        .AddInteractiveCli<InteractiveOptions>(configuration)
         .Build();
 
 host.UseInteractiveCli<InteractiveOptions, TopLevelMenu>(_ => new TopLevelMenu(), args);
