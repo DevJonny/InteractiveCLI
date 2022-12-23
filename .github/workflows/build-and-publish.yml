@@ -40,11 +40,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
       
+    - name: Pack
+      run: dotnet pack src/InteractiveCLI/InteractiveCLI.csproj --output artifacts --no-build --no-restore --configuration Release
+      
     - name: Upload packages as artifacts
       uses: actions/upload-artifact@v3
       with:
         name: nuget packages
-        path: "**/*.nupkg"
+        path: "artifacts/*.nupkg"
         
     - name: Push to GitHub Feed
       if: ${{ github.event_name != 'pull_request' }}
