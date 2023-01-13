@@ -2,7 +2,7 @@ using Paramore.Brighter;
 
 namespace InteractiveCLI.Actions;
 
-public abstract class RepeatableAsyncActionBase<T> : RequestHandlerAsync<T> where T : Command
+public abstract class RepeatableAsyncActionHandler<T> : RequestHandlerAsync<T> where T : RepeatableAction
 {
     public override async Task<T> HandleAsync(T command, CancellationToken cancellationToken = new())
     {

@@ -2,14 +2,14 @@ using Paramore.Brighter;
 
 namespace InteractiveCLI.Actions;
 
-public abstract class SingleActionBase<T> : RequestHandlerAsync<T> where T : Command
+public abstract class SingleAsyncActionHandler<T> : RequestHandlerAsync<T> where T : SingleAction
 {
     public override async Task<T> HandleAsync(T command, CancellationToken cancellationToken = new())
     {
-        Action();
+        await ActionAsync();
         
         return await base.HandleAsync(command, cancellationToken);
     }
 
-    protected abstract void Action();
+    protected abstract Task ActionAsync();
 }

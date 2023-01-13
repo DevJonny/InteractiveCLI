@@ -1,18 +1,14 @@
 using InteractiveCLI.Actions;
-using Paramore.Brighter;
 
 namespace SampleMenusAndActions.SingleActions;
 
-public class SynchronousActionHandler : SingleActionBase<SynchronousAction>
+public class SynchronousActionHandler : SingleActionHandler<SynchronousAction>
 {
     protected override void Action()
     {
     }
 }
 
-public class SynchronousAction : Command
+public class SynchronousAction : SingleAction
 {
-    public SynchronousAction() : base(Guid.NewGuid())
-    {
-    }
 }

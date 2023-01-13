@@ -1,5 +1,4 @@
 using InteractiveCLI.Menus;
-using InteractiveCLI.Options;
 using Microsoft.Extensions.Logging;
 using Paramore.Brighter;
 using SampleMenusAndActions.Options;

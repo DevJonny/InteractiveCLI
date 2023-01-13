@@ -1,10 +1,9 @@
 using InteractiveCLI.Actions;
-using Paramore.Brighter;
 using Spectre.Console;
 
 namespace SampleMenusAndActions.RepeatableActions;
 
-public class SynchronousRepeatableActionHandler : RepeatableActionBase<SynchronousRepeatableAction>
+public class SynchronousRepeatableActionHandler : RepeatableActionHandler<SynchronousRepeatableAction>
 {
     protected override void RepeatableAction(out bool stop)
     {
@@ -17,9 +16,6 @@ public class SynchronousRepeatableActionHandler : RepeatableActionBase<Synchrono
     }
 }
 
-public class SynchronousRepeatableAction : Command
+public class SynchronousRepeatableAction : RepeatableAction
 {
-    public SynchronousRepeatableAction() : base(Guid.NewGuid())
-    {
-    }
 }

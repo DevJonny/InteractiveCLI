@@ -1,10 +1,9 @@
 using InteractiveCLI.Actions;
-using Paramore.Brighter;
 using Spectre.Console;
 
 namespace SampleMenusAndActions.RepeatableActions;
 
-public class AsynchronousRepeatableActionHandler : RepeatableAsyncActionBase<AsynchronousRepeatableAction>
+public class AsynchronousRepeatableActionHandler : RepeatableAsyncActionHandler<AsynchronousRepeatableAction>
 {
     protected override async Task<bool> RepeatableAsyncAction()
     {
@@ -17,9 +16,6 @@ public class AsynchronousRepeatableActionHandler : RepeatableAsyncActionBase<Asy
     }
 }
 
-public class AsynchronousRepeatableAction : Command
+public class AsynchronousRepeatableAction : RepeatableAction
 {
-    public AsynchronousRepeatableAction() : base(Guid.NewGuid())
-    {
-    }
 }

@@ -1,9 +1,8 @@
 using InteractiveCLI.Actions;
-using Paramore.Brighter;
 
 namespace SampleMenusAndActions.SingleActions;
 
-public class AsynchronousActionHandler : SingleAsyncActionBase<AsynchronousAction>
+public class AsynchronousActionHandler : SingleAsyncActionHandler<AsynchronousAction>
 {
     protected override async Task ActionAsync()
     {
@@ -16,9 +15,6 @@ public class AsynchronousActionHandler : SingleAsyncActionBase<AsynchronousActio
     }
 }
 
-public class AsynchronousAction : Command
+public class AsynchronousAction : SingleAction
 {
-    public AsynchronousAction() : base(Guid.NewGuid())
-    {
-    }
 }
