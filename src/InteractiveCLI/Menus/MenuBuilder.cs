@@ -10,4 +10,9 @@ public class MenuBuilder
 
         return this;
     }
+
+    public MenuBuilder AddMenuItem<T>(string name, string description, Func<bool> inclusionPredicate) where T : InteractiveCLI.Actions.Action
+    {
+        return inclusionPredicate() ? AddMenuItem<T>(name, description) : this;
+    }
 }
