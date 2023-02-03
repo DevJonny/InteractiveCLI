@@ -1,4 +1,5 @@
-﻿using InteractiveCLI;
+﻿
+using InteractiveCLI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using SampleMenusAndActions.Menus;

@@ -19,9 +19,6 @@ public class SubMenuHandler : MenuHandlerBase<SubMenu>
     }
 }
 
-public class SubMenu : Command
+public class SubMenu : Menu
 {
-    public SubMenu() : base(Guid.NewGuid())
-    {
-    }
 }

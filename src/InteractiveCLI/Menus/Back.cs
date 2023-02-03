@@ -1,8 +1,5 @@
-using Paramore.Brighter;
-
 namespace InteractiveCLI.Menus;
 
-public class Back : Command
+public class Back : InteractiveCLI.Actions.Action
 {
-    public Back() : base(Guid.NewGuid()) { }
 }

@@ -1,10 +1,5 @@
-using Paramore.Brighter;
-
 namespace InteractiveCLI.Menus;
 
-public class Menu : Command
+public class Menu : InteractiveCLI.Actions.Action
 {
-    public Menu() : base(Guid.NewGuid())
-    {
-    }
 }

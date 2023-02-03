@@ -1,10 +1,5 @@
-using Paramore.Brighter;
-
 namespace InteractiveCLI.Actions;
 
-public class RepeatableAction : Command
+public class RepeatableAction : Action
 {
-    public RepeatableAction() : base(Guid.NewGuid())
-    {
-    }
 }

@@ -1,8 +1,5 @@
-using Paramore.Brighter;
-
 namespace InteractiveCLI.Menus;
 
-public class Quit : Command
+public class Quit : InteractiveCLI.Actions.Action
 {
-    public Quit() : base(Guid.NewGuid()) { }
 }
