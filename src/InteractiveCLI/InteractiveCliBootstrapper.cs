@@ -20,6 +20,14 @@ public static class InteractiveCliBootstrapper
 
         return hostBuilder;
     }
+
+    public static IHostBuilder AddInteractiveCLI<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration, Action<IServiceCollection> configureServices)
+        where TOptions : class, IOptions
+    {
+        hostBuilder.AddInteractiveCli<TOptions>(configuration, configureServices, builder => builder);
+
+        return hostBuilder;
+    }
     
     public static IHostBuilder AddInteractiveCli<TOptions>(
         this IHostBuilder hostBuilder,
