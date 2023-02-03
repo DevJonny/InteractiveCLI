@@ -16,7 +16,7 @@ public static class InteractiveCliBootstrapper
     public static IHostBuilder AddInteractiveCli<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration) 
         where TOptions : class, IOptions
     {
-        hostBuilder.AddInteractiveCli<TOptions>(configuration, _ => { });
+        hostBuilder.AddInteractiveCli<TOptions>(configuration, _ => { }, brighterBuilder => brighterBuilder);
 
         return hostBuilder;
     }
@@ -24,7 +24,8 @@ public static class InteractiveCliBootstrapper
     public static IHostBuilder AddInteractiveCli<TOptions>(
         this IHostBuilder hostBuilder,
         IConfiguration configuration,
-        Action<IServiceCollection> configureServices) where TOptions : class, IOptions
+        Action<IServiceCollection> configureServices,
+        Func<IBrighterBuilder, IBrighterBuilder> configureBrighter) where TOptions : class, IOptions
     {
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
@@ -35,9 +36,12 @@ public static class InteractiveCliBootstrapper
             .ConfigureServices((_, services) =>
             {
                 configureServices(services);
-                services
+                var brighterBuilder = 
+                    services
                     .AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get())
-                    .AddBrighter().AutoFromAssemblies();
+                    .AddBrighter(); 
+                
+                configureBrighter(brighterBuilder).AutoFromAssemblies();
             })
             .UseSerilog();
 
