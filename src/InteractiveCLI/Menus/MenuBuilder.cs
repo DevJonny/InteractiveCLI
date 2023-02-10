@@ -15,4 +15,9 @@ public class MenuBuilder
     {
         return inclusionPredicate() ? AddMenuItem<T>(name, description) : this;
     }
+
+    public MenuBuilder AddMenuItem<T>(string name, string description, bool includeIf) where T : InteractiveCLI.Actions.Action
+    {
+        return includeIf ? AddMenuItem<T>(name, description) : this;
+    }
 }
