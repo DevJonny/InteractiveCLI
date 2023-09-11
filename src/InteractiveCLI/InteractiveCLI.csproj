@@ -13,7 +13,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Paramore.Brighter.Extensions.DependencyInjection" Version="9.6.1" />
+      <PackageReference Include="Paramore.Brighter.Extensions.DependencyInjection" Version="9.6.3" />
       <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
       <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
       <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
