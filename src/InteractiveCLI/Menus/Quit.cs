@@ -1,5 +1,11 @@
+using InteractiveCLI.Actions;
+
 namespace InteractiveCLI.Menus;
 
-public class Quit : InteractiveCLI.Actions.Action
+public class Quit : IAmAnSyncAction
 {
+    public void Do()
+    {
+        // No-op as we're exiting the application
+    }
 }

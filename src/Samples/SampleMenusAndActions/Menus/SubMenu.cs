@@ -1,13 +1,12 @@
 using InteractiveCLI.Menus;
-using Paramore.Brighter;
 using SampleMenusAndActions.RepeatableActions;
 using SampleMenusAndActions.SingleActions;
 
 namespace SampleMenusAndActions.Menus;
 
-public class SubMenuHandler : MenuHandlerBase<SubMenu>
+public class SubMenu : Menu
 {
-    public SubMenuHandler(IAmACommandProcessor commandProcessor) : base(commandProcessor, true)
+    public SubMenu(IServiceProvider serviceProvider) : base(serviceProvider, false, false)
     {
     }
 
@@ -17,8 +16,4 @@ public class SubMenuHandler : MenuHandlerBase<SubMenu>
             .AddMenuItem<AsynchronousAction>("Asynchronous Action", "An asynchronous one time action")
             .AddMenuItem<AsynchronousRepeatableAction>("Asynchronous Repeatable Action", "An asynchronous repeatable action");
     }
-}
-
-public class SubMenu : Menu
-{
 }

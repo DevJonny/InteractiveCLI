@@ -1,12 +1,10 @@
 ﻿using CommandLine;
+using InteractiveCLI.Menus;
 using InteractiveCLI.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Paramore.Brighter;
-using Paramore.Brighter.Extensions.DependencyInjection;
 using Serilog;
-using Serilog.Events;
 using Spectre.Console;
 
 namespace InteractiveCLI;
@@ -16,7 +14,7 @@ public static class InteractiveCliBootstrapper
     public static IHostBuilder AddInteractiveCli<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration) 
         where TOptions : class, IOptions
     {
-        hostBuilder.AddInteractiveCli<TOptions>(configuration, _ => { }, brighterBuilder => brighterBuilder);
+        hostBuilder.AddInteractiveCli<TOptions>(configuration, _ => { });
 
         return hostBuilder;
     }
@@ -24,7 +22,7 @@ public static class InteractiveCliBootstrapper
     public static IHostBuilder AddInteractiveCLI<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration, Action<IServiceCollection> configureServices)
         where TOptions : class, IOptions
     {
-        hostBuilder.AddInteractiveCli<TOptions>(configuration, configureServices, builder => builder);
+        hostBuilder.AddInteractiveCli<TOptions>(configuration, configureServices);
 
         return hostBuilder;
     }
@@ -32,24 +30,20 @@ public static class InteractiveCliBootstrapper
     public static IHostBuilder AddInteractiveCli<TOptions>(
         this IHostBuilder hostBuilder,
         IConfiguration configuration,
-        Action<IServiceCollection> configureServices,
-        Func<IBrighterBuilder, IBrighterBuilder> configureBrighter) where TOptions : class, IOptions
+        Action<IServiceCollection> configureServices) where TOptions : class, IOptions
     {
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
-            .MinimumLevel.Override("Paramore.Brighter", LogEventLevel.Warning)
-            .CreateLogger();
+            .CreateBootstrapLogger();
 
         hostBuilder
             .ConfigureServices((_, services) =>
             {
                 configureServices(services);
-                var brighterBuilder = 
-                    services
+                services
                     .AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get())
-                    .AddBrighter(); 
-                
-                configureBrighter(brighterBuilder).AutoFromAssemblies();
+                    .AddSingleton(Log.Logger)
+                    .RegisterActions();
             })
             .UseSerilog();
 
@@ -60,7 +54,7 @@ public static class InteractiveCliBootstrapper
         this IHost host, 
         Func<TOptions, TMenu> buildFirstMenu, 
         params string[] args) 
-            where TMenu : Command 
+            where TMenu : Menu 
             where TOptions : class, IOptions
     {
         try
@@ -69,8 +63,7 @@ public static class InteractiveCliBootstrapper
                 .WithParsed(options =>
                 {
                     OptionsFactory<TOptions>.Set(options);
-                    var commandProcessor = host.Services.GetService<IAmACommandProcessor>();
-                    commandProcessor?.SendAsync(buildFirstMenu(options)).Wait();
+                    buildFirstMenu(options).DoAsync().Wait();
                 });
         }
         catch (AggregateException e)
