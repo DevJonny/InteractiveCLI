@@ -11,6 +11,30 @@ namespace InteractiveCLI;
 public static class InteractiveCliBootstrapper
 {
     public static IServiceProvider ServiceProvider;
+
+    public static IHostBuilder AddInteractiveCli(this IHostBuilder hostBuilder)
+    {
+        hostBuilder.AddInteractiveCli<EmptyOptions>(new ConfigurationBuilder().Build());
+
+        return hostBuilder;
+    }
+
+    public static IHostBuilder AddInteractiveCli(this IHostBuilder hostBuilder, IConfiguration configuration)
+    {
+        hostBuilder.AddInteractiveCli<EmptyOptions>(configuration);
+
+        return hostBuilder;
+    }
+
+    public static IHostBuilder AddInteractiveCli(
+        this IHostBuilder hostBuilder,
+        IConfiguration configuration,
+        Action<IServiceCollection> configureServices)
+    {
+        hostBuilder.AddInteractiveCli<EmptyOptions>(configuration, configureServices);
+
+        return hostBuilder;
+    }
     
     public static IHostBuilder AddInteractiveCli<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration) 
         where TOptions : class, IOptions
@@ -20,7 +44,10 @@ public static class InteractiveCliBootstrapper
         return hostBuilder;
     }
 
-    public static IHostBuilder AddInteractiveCLI<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration, Action<IServiceCollection> configureServices)
+    public static IHostBuilder AddInteractiveCLI<TOptions>(
+        this IHostBuilder hostBuilder, 
+        IConfiguration configuration, 
+        Action<IServiceCollection> configureServices)
         where TOptions : class, IOptions
     {
         hostBuilder.AddInteractiveCli<TOptions>(configuration, configureServices);
@@ -55,6 +82,13 @@ public static class InteractiveCliBootstrapper
 
         return hostBuilder;
     }
+
+    public static IHost UseInteractiveCli<TMenu>(
+        this IHost host,
+        Func<EmptyOptions, TMenu> buildFirstMenu,
+        params string[] args)
+        where TMenu : Menu
+        => host.UseInteractiveCli<EmptyOptions, TMenu>(buildFirstMenu, args);
     
     public static IHost UseInteractiveCli<TOptions, TMenu>(
         this IHost host, 
