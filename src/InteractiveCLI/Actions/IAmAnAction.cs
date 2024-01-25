@@ -1,5 +1,3 @@
 namespace InteractiveCLI.Actions;
 
-public interface IAmAnAction
-{
-}
+public interface IAmAnAction;

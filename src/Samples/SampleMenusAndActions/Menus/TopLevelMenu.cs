@@ -1,20 +1,21 @@
 using InteractiveCLI.Menus;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using SampleMenusAndActions.Options;
 using SampleMenusAndActions.RepeatableActions;
 using SampleMenusAndActions.SingleActions;
+using Serilog;
 
 namespace SampleMenusAndActions.Menus;
 
-public class TopLevelMenu(IServiceProvider serviceProvider, InteractiveOptions options, ILogger<TopLevelMenu> logger) 
-    : Menu(serviceProvider, true, true)
+public class TopLevelMenu(InteractiveOptions options, ILogger logger) 
+    : Menu(true, true)
 {
+    private readonly ILogger _logger = logger.ForContext<TopLevelMenu>();
+    
     protected override void BuildMenu()
     {
-        logger.LogInformation("Hello, {Name}", options.Name);
+        _logger.Information("Hello, {Name}", options.Name);
         
-        serviceProvider.GetService<NonMenuAction>()!.Do();
+        new NonMenuAction(logger).Do();
         
         MenuBuilder
             .AddMenuItem<SubMenu>( "Sub Menu", "A secondary menu with asynchronous actions")

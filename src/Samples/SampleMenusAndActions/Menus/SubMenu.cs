@@ -4,12 +4,8 @@ using SampleMenusAndActions.SingleActions;
 
 namespace SampleMenusAndActions.Menus;
 
-public class SubMenu : Menu
+public class SubMenu() : Menu(false, false)
 {
-    public SubMenu(IServiceProvider serviceProvider) : base(serviceProvider, false, false)
-    {
-    }
-
     protected override void BuildMenu()
     {
         MenuBuilder

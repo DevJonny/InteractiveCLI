@@ -1,6 +1,5 @@
 using System.Globalization;
 using InteractiveCLI.Actions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace InteractiveCLI;
 
@@ -33,6 +32,5 @@ public static class Extensions
         }
 
         return serviceCollection;
-
     }
 }

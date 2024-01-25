@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SampleMenusAndActions.Menus;
 using SampleMenusAndActions.Options;
 using Serilog;
@@ -21,4 +20,4 @@ var host =
         .Build();
 
 host.UseInteractiveCli<InteractiveOptions, TopLevelMenu>(options => 
-    new TopLevelMenu(host.Services, options, host.Services.GetService<ILogger<TopLevelMenu>>()!), args);
+    new TopLevelMenu(options, host.Services.GetService<ILogger>()!), args);

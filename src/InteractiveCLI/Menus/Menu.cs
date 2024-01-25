@@ -3,7 +3,7 @@ using Spectre.Console;
 
 namespace InteractiveCLI.Menus;
 
-public abstract class Menu(IServiceProvider serviceProvider, bool quitable, bool isTopLevel) : IAmAnAsyncAction
+public abstract class Menu(bool quitable, bool isTopLevel) : IAmAnAsyncAction
 {
     protected readonly MenuBuilder MenuBuilder = new();
 
@@ -39,7 +39,7 @@ public abstract class Menu(IServiceProvider serviceProvider, bool quitable, bool
 
             var actionType = MenuBuilder.MenuItems.First(mi => mi.Name == option).ActionType;
 
-            var nextAction = serviceProvider.GetService(actionType);
+            var nextAction = InteractiveCliBootstrapper.ServiceProvider.GetService(actionType);
             
             if (nextAction is IAmAnAsyncAction nextAsyncAction)
                 await nextAsyncAction.DoAsync(cancellationToken);

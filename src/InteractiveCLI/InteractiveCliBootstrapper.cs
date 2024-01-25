@@ -2,7 +2,6 @@
 using InteractiveCLI.Menus;
 using InteractiveCLI.Options;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Spectre.Console;
@@ -11,6 +10,8 @@ namespace InteractiveCLI;
 
 public static class InteractiveCliBootstrapper
 {
+    public static IServiceProvider ServiceProvider;
+    
     public static IHostBuilder AddInteractiveCli<TOptions>(this IHostBuilder hostBuilder, IConfiguration configuration) 
         where TOptions : class, IOptions
     {
@@ -29,12 +30,15 @@ public static class InteractiveCliBootstrapper
     
     public static IHostBuilder AddInteractiveCli<TOptions>(
         this IHostBuilder hostBuilder,
-        IConfiguration configuration,
+        IConfiguration? configuration,
         Action<IServiceCollection> configureServices) where TOptions : class, IOptions
     {
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration)
-            .CreateBootstrapLogger();
+        LoggerConfiguration loggerConfiguration = new();
+
+        if (configuration is not null)
+            loggerConfiguration = loggerConfiguration.ReadFrom.Configuration(configuration);
+        
+        Log.Logger = loggerConfiguration.CreateBootstrapLogger();
 
         hostBuilder
             .ConfigureServices((_, services) =>
@@ -44,6 +48,8 @@ public static class InteractiveCliBootstrapper
                     .AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get())
                     .AddSingleton(Log.Logger)
                     .RegisterActions();
+
+                ServiceProvider = services.BuildServiceProvider();
             })
             .UseSerilog();
 
