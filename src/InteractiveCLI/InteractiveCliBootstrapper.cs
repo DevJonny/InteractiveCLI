@@ -70,9 +70,9 @@ public static class InteractiveCliBootstrapper
         hostBuilder
             .ConfigureServices((_, services) =>
             {
+                services.AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get());
                 configureServices(services);
-                services
-                    .AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get())
+                services                    
                     .AddSingleton(Log.Logger)
                     .RegisterActions();
 
