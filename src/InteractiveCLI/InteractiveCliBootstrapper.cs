@@ -71,8 +71,9 @@ public static class InteractiveCliBootstrapper
             .ConfigureServices((_, services) =>
             {
                 services.AddSingleton<TOptions>(_ => OptionsFactory<TOptions>.Get());
+                
                 configureServices(services);
-                services                    
+                services
                     .AddSingleton(Log.Logger)
                     .RegisterActions();
 
