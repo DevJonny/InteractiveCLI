@@ -2,7 +2,7 @@
 
 namespace InteractiveCLI.ServiceConfigurationHelpers;
 
-public static class GenericServiceCollectionExtentions
+public static class GenericServiceCollectionExtensions
 {
     public static IServiceBuilder<TService> AddServiceWithFactory<TService>(
         this IServiceCollection services,
