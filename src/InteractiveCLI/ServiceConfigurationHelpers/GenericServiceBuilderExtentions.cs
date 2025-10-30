@@ -1,6 +1,6 @@
 ﻿namespace InteractiveCLI.ServiceConfigurationHelpers;
 
-public static class GenericServiceBuilderExtentions
+public static class GenericServiceBuilderExtensions
 {
     public static IServiceBuilder<TService> ConfigureService<TService>(
         this IServiceBuilder<TService> builder,
